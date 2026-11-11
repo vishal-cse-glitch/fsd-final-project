@@ -1,0 +1,12 @@
+node_modules/
+dist/
+target/
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!.env.example
+.idea/
+.vscode/*
+!.vscode/extensions.json

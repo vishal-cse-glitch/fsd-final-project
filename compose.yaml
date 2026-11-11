@@ -1,0 +1,31 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: studymate-ollama
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - studymate_ollama:/root/.ollama
+  mysql:
+    image: mysql:8.4
+    container_name: studymate-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: studymate
+      MYSQL_USER: studymate
+      MYSQL_PASSWORD: studymate_dev
+      MYSQL_ROOT_PASSWORD: root_dev
+    ports:
+      - "3307:3306"
+    volumes:
+      - studymate_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  studymate_mysql:
+  studymate_ollama:
